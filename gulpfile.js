@@ -1,14 +1,25 @@
-const { dest, series, src } = require('gulp');
+const gulp = require('gulp');
+const browserSync = require('browser-sync').create();
 const ejs = require('gulp-ejs');
 const rename = require('gulp-rename');
 const sass = require('gulp-sass')(require('sass'));
 
 const html = () =>
-  src('src/**/*.ejs')
+  gulp
+    .src('src/**/*.ejs')
     .pipe(ejs())
     .pipe(rename({ extname: '.html' }))
-    .pipe(dest('./dist'));
+    .pipe(gulp.dest('./dist'));
 
-const css = () => src('src/**/*.scss').pipe(sass()).pipe(dest('./dist'));
+const css = () =>
+  gulp.src('src/**/*.scss').pipe(sass()).pipe(gulp.dest('./dist'));
 
-exports.default = series(html, css);
+gulp.task('build', gulp.series(html, css));
+
+gulp.task('serve', function () {
+  browserSync.init({
+    server: { baseDir: './dist' },
+  });
+
+  gulp.watch('./src/**/*', gulp.series('build', browserSync.reload));
+});
