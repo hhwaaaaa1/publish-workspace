@@ -43,13 +43,20 @@ gulp.task('clean', function () {
 
 gulp.task('build', gulp.series('clean', 'html', 'css', 'js'));
 
-gulp.task('serve', function () {
+gulp.task('reload', function(done) {
+  browserSync.reload();
+  done();
+});
+
+gulp.task('init', function() {
   browserSync.init({
     server: { baseDir: './dist' },
   });
 
   gulp.watch(
     './src/**/*',
-    gulp.series('build', browserSync.reload)
+    gulp.series('build', 'reload')
   );
 });
+
+gulp.task('serve', gulp.series('build', 'init'));
