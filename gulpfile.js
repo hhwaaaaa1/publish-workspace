@@ -3,6 +3,7 @@ const browserSync = require('browser-sync').create();
 const clean = require('gulp-clean');
 const ejs = require('gulp-ejs');
 const frontMatter = require('gulp-front-matter');
+const htmlBeautify = require('gulp-html-beautify');
 const layout = require('gulp-layout');
 const rename = require('gulp-rename');
 const sass = require('gulp-sass')(require('sass'));
@@ -21,6 +22,7 @@ gulp.task('html', function () {
       }))
     )
     .pipe(rename({ extname: '.html' }))
+    .pipe(htmlBeautify({ "indent_size": 2 }))
     .pipe(gulp.dest('./dist'));
 });
 
