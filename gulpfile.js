@@ -15,6 +15,8 @@ gulp.task('html', function () {
     .pipe(
       layout((file) => ({
         layout: 'src/layouts/default.ejs',
+        styles: [],
+        scripts: [],
         ...file.frontMatter,
       }))
     )
