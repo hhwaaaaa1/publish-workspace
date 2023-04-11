@@ -2,13 +2,22 @@ const gulp = require('gulp');
 const browserSync = require('browser-sync').create();
 const clean = require('gulp-clean');
 const ejs = require('gulp-ejs');
+const frontMatter = require('gulp-front-matter');
+const layout = require('gulp-layout');
 const rename = require('gulp-rename');
 const sass = require('gulp-sass')(require('sass'));
 
 gulp.task('html', function () {
   return gulp
-    .src('src/**/*.ejs')
+    .src(['src/**/*.ejs', '!src/layouts/*'])
+    .pipe(frontMatter())
     .pipe(ejs())
+    .pipe(
+      layout((file) => ({
+        layout: 'src/layouts/default.ejs',
+        ...file.frontMatter,
+      }))
+    )
     .pipe(rename({ extname: '.html' }))
     .pipe(gulp.dest('./dist'));
 });
