@@ -31,11 +31,17 @@ gulp.task('css', function () {
     .pipe(gulp.dest('./dist'));
 });
 
+gulp.task('js', function() {
+  return gulp
+    .src('src/**/*.js')
+    .pipe(gulp.dest('./dist'));
+});
+
 gulp.task('clean', function () {
   return gulp.src('dist/*').pipe(clean());
 });
 
-gulp.task('build', gulp.series('clean', 'html', 'css'));
+gulp.task('build', gulp.series('clean', 'html', 'css', 'js'));
 
 gulp.task('serve', function () {
   browserSync.init({
