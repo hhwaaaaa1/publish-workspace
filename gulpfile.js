@@ -1,6 +1,7 @@
 const gulp = require('gulp');
 const browserSync = require('browser-sync').create();
 const clean = require('gulp-clean');
+const cleanCSS = require('gulp-clean-css');
 const data = require('gulp-data');
 const ejs = require('gulp-ejs');
 const frontMatter = require('gulp-front-matter');
@@ -55,9 +56,18 @@ gulp.task('index-html', function () {
 
 gulp.task('css', function () {
   return gulp
-    .src('src/**/*.scss')
+    .src('src/projects/**/*.scss')
     .pipe(sass())
     .pipe(postcss([require('tailwindcss'), require('autoprefixer')]))
+    .pipe(gulp.dest('./dist/projects'));
+});
+
+gulp.task('index-css', function () {
+  return gulp
+    .src('src/style.scss')
+    .pipe(sass())
+    .pipe(postcss([require('tailwindcss'), require('autoprefixer')]))
+    .pipe(cleanCSS())
     .pipe(gulp.dest('./dist'));
 });
 
@@ -69,7 +79,7 @@ gulp.task('clean', function () {
   return gulp.src('dist/*').pipe(clean());
 });
 
-gulp.task('build', gulp.series('clean', 'html', 'index-html', 'css', 'js'));
+gulp.task('build', gulp.series('clean', 'html', 'index-html', 'css', 'index-css', 'js'));
 
 gulp.task('reload', function (done) {
   browserSync.reload();
