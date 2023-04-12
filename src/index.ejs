@@ -1,7 +1,29 @@
----
-title: Publish workspace
-styles:
-  - style.css
----
-
-<div class="flex">테스트</div>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Publish workspace</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container flex">
+      <nav class="nav basis-64 bg-gray-800 px-1 py-3 text-sm text-slate-50">
+        <ul>
+          <% for (const [project, pages] of Object.entries(projects)) { %>
+          <li class="py-1 px-3"><%= project %></li>
+          <ul>
+            <% for (const [page, path] of Object.entries(pages)) { %>
+            <li>
+              <button class="sub py-1 px-3" type="button" data-href="<%= path %>"><%= page %></button>
+            </li>
+            <% } %>
+          </ul>
+          <% } %>
+        </ul>
+      </nav>
+      <div class="grow"></div>
+    </div>
+  </body>
+</html>
