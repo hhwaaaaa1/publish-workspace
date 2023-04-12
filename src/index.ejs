@@ -9,7 +9,7 @@
   </head>
   <body>
     <div class="container flex">
-      <nav class="nav basis-64 bg-gray-800 px-1 py-3 text-sm text-slate-50">
+      <nav id="nav" class="nav basis-64 bg-gray-800 px-1 py-3 text-sm text-slate-50">
         <ul>
           <% for (const [project, pages] of Object.entries(projects)) { %>
           <li class="py-1 px-3"><%= project %></li>
@@ -23,7 +23,13 @@
           <% } %>
         </ul>
       </nav>
-      <div class="grow"></div>
+      <div class="main grow flex flex-col">
+        <div class="basis-10 bg-slate-200">
+          <a id="currentPath" href="" target="__blank"></a>
+        </div>
+        <iframe id="iframe" class="grow" src=""></iframe>
+      </div>
     </div>
+    <script src="main.js"></script>
   </body>
 </html>

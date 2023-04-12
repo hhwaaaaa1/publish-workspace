@@ -35,5 +35,14 @@ body {
       border-right-width: 0;
       transform: translateY(-100%);
     }
+    &.current {
+      background: red;
+    }
+  }
+}
+
+.main {
+  iframe {
+    width: 100%;
   }
 }
